@@ -1,0 +1,92 @@
+import java.util.Scanner;
+
+class CustomBankAccount {
+    private String holderName;
+    private String username;
+    private String password;
+    private String accountNumber;
+    private float accountBalance = 1000000f;
+    private int transactionCount = 0;
+    private StringBuilder transactionHistory = new StringBuilder();
+
+    public CustomBankAccount() {
+        // Constructor
+    }
+
+    public void registerAccount() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Your Name: ");
+        this.holderName = scanner.nextLine();
+        System.out.print("Enter Your Username: ");
+        this.username = scanner.nextLine();
+        System.out.print("Enter Your Password: ");
+        this.password = scanner.nextLine();
+        System.out.print("Enter Your Account Number: ");
+        this.accountNumber = scanner.nextLine();
+        System.out.println("You have successfully registered! Kindly log in.");
+    }
+
+    public boolean loginAccount() {
+        Scanner scanner = new Scanner(System.in);
+        boolean isLoggedIn = false;
+
+        while (!isLoggedIn) {
+            System.out.print("Enter Your Username: ");
+            String inputUsername = scanner.nextLine();
+
+            if (inputUsername.equals(username)) {
+                while (!isLoggedIn) {
+                    System.out.print("Enter Your Password: ");
+                    String inputPassword = scanner.nextLine();
+
+                    if (inputPassword.equals(password)) {
+                        System.out.println("You have logged in successfully!");
+                        isLoggedIn = true;
+                    } else {
+                        System.out.println("Incorrect Password");
+                    }
+                }
+            } else {
+                System.out.println("Username not found");
+            }
+        }
+
+        return isLoggedIn;
+    }
+
+    public void withdrawFunds() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the amount to withdraw: ");
+        float withdrawalAmount = scanner.nextFloat();
+
+        if (withdrawalAmount <= accountBalance) {
+            transactionCount++;
+            accountBalance -= withdrawalAmount;
+            System.out.println("Withdrawal Successful");
+            String transactionRecord = withdrawalAmount + " Rs Withdrawn\n";
+            transactionHistory.append(transactionRecord);
+        } else {
+            System.out.println("Insufficient Balance");
+        }
+    }
+
+    public void depositFunds() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the amount to deposit: ");
+        float depositAmount = scanner.nextFloat();
+
+        if (depositAmount <= 1000000f) {
+            transactionCount++;
+            accountBalance += depositAmount;
+            System.out.println("Deposit Successful");
+            String transactionRecord = depositAmount + " Rs Deposited\n";
+            transactionHistory.append(transactionRecord);
+        } else {
+            System.out.println("Sorry, the maximum deposit limit is Rs. 1,000,000.00 only");
+        }
+    }
+
+    public void transferFunds() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Recipient's Name: ");
+        String recipient
